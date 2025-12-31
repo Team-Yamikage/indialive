@@ -1,0 +1,4 @@
+project_id = "wdfkbzzjfpimnfkpjigi"
+
+[functions.stream-proxy]
+verify_jwt = false

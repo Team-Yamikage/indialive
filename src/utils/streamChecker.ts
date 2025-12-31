@@ -4,14 +4,16 @@ const MAX_RETRIES = 2;
 interface StreamCheckResult {
   isWorking: boolean;
   isHttpBlocked: boolean;
+  needsProxy: boolean;
 }
 
 export async function checkStream(url: string): Promise<StreamCheckResult> {
   // Check if it's an HTTP stream on HTTPS page
   const isHttpOnHttps = window.location.protocol === 'https:' && url.startsWith('http://');
   
+  // For HTTP streams on HTTPS, we'll mark them as needing proxy but still working
   if (isHttpOnHttps) {
-    return { isWorking: false, isHttpBlocked: true };
+    return { isWorking: true, isHttpBlocked: false, needsProxy: true };
   }
   
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
@@ -21,7 +23,7 @@ export async function checkStream(url: string): Promise<StreamCheckResult> {
       
       // Try HEAD request first (faster)
       try {
-        const headResponse = await fetch(url, {
+        await fetch(url, {
           method: 'HEAD',
           signal: controller.signal,
           mode: 'no-cors', // Many streams don't support CORS
@@ -29,7 +31,7 @@ export async function checkStream(url: string): Promise<StreamCheckResult> {
         clearTimeout(timeoutId);
         
         // no-cors mode always returns opaque response, so we assume success
-        return { isWorking: true, isHttpBlocked: false };
+        return { isWorking: true, isHttpBlocked: false, needsProxy: false };
       } catch {
         // HEAD failed, try GET
         const getController = new AbortController();
@@ -42,18 +44,22 @@ export async function checkStream(url: string): Promise<StreamCheckResult> {
         });
         clearTimeout(getTimeoutId);
         
-        return { isWorking: true, isHttpBlocked: false };
+        return { isWorking: true, isHttpBlocked: false, needsProxy: false };
       }
     } catch (error) {
       if (attempt === MAX_RETRIES - 1) {
-        return { isWorking: false, isHttpBlocked: false };
+        // Check if this might be a CORS/mixed content issue
+        if (error instanceof TypeError) {
+          return { isWorking: false, isHttpBlocked: true, needsProxy: true };
+        }
+        return { isWorking: false, isHttpBlocked: false, needsProxy: false };
       }
       // Wait before retry
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
   
-  return { isWorking: false, isHttpBlocked: false };
+  return { isWorking: false, isHttpBlocked: false, needsProxy: false };
 }
 
 // Batch check multiple streams with concurrency limit
