@@ -7,7 +7,6 @@ import { TvModeHint } from '@/components/TvModeHint';
 import { Footer } from '@/components/Footer';
 import { useChannels } from '@/hooks/useChannels';
 import { Channel, ViewMode } from '@/types/channel';
-import { Helmet } from 'react-helmet';
 
 const Index = () => {
   const {
@@ -99,12 +98,8 @@ const Index = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Watch Indian Live TV - Fast, Simple, Free | IPTV Stream</title>
-        <meta name="description" content="Stream Indian live TV channels for free. Watch Hindi, Tamil, Telugu, Malayalam, and regional channels. Fast, simple, and completely free IPTV streaming." />
-        <meta name="keywords" content="Indian TV, IPTV, live streaming, Hindi channels, Tamil TV, Telugu TV, free TV, live TV India" />
-        <link rel="canonical" href="/" />
-      </Helmet>
+      <title>Watch Indian Live TV - Fast, Simple, Free | IPTV Stream</title>
+      <meta name="description" content="Stream Indian live TV channels for free. Watch Hindi, Tamil, Telugu, Malayalam, and regional channels. Fast, simple, and completely free IPTV streaming." />
 
       <div className="min-h-screen bg-background">
         {/* Hero Section */}
