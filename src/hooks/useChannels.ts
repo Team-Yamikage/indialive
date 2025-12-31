@@ -16,7 +16,6 @@ export function useChannels() {
   const [favorites, setFavorites] = useLocalStorage<string[]>('iptv-favorites', []);
   const [watchlist, setWatchlist] = useLocalStorage<string[]>('iptv-watchlist', []);
   const [showHidden, setShowHidden] = useLocalStorage('iptv-show-hidden', false);
-  const [failCounts, setFailCounts] = useLocalStorage<Record<string, number>>('iptv-fail-counts', {});
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,25 +52,22 @@ export function useChannels() {
       }
       
       // Convert to Channel objects
-      const channelList: Channel[] = parsedChannels.map((pc: ParsedChannel) => {
-        const id = generateChannelId(pc);
-        return {
-          id,
-          name: pc.name,
-          url: pc.url,
-          logo: pc.logo,
-          group: pc.group || 'General',
-          language: pc.tvgLanguage || 'Hindi',
-          country: pc.tvgCountry || 'IN',
-          tvgId: pc.tvgId,
-          tvgName: pc.tvgName,
-          isHD: isHDChannel(pc),
-          isWorking: (failCounts[id] || 0) < 3, // Consider working if fail count < 3
-          isChecking: false,
-          isFavorite: favorites.includes(id),
-          isInWatchlist: watchlist.includes(id),
-        };
-      });
+      const channelList: Channel[] = parsedChannels.map((pc: ParsedChannel) => ({
+        id: generateChannelId(pc),
+        name: pc.name,
+        url: pc.url,
+        logo: pc.logo,
+        group: pc.group || 'General',
+        language: pc.tvgLanguage || 'Hindi',
+        country: pc.tvgCountry || 'IN',
+        tvgId: pc.tvgId,
+        tvgName: pc.tvgName,
+        isHD: isHDChannel(pc),
+        isWorking: true, // Assume working initially
+        isChecking: false,
+        isFavorite: favorites.includes(generateChannelId(pc)),
+        isInWatchlist: watchlist.includes(generateChannelId(pc)),
+      }));
       
       setChannels(channelList);
       setCheckProgress({ checked: 0, total: channelList.length });
@@ -84,7 +80,7 @@ export function useChannels() {
     } finally {
       setIsLoading(false);
     }
-  }, [favorites, watchlist, failCounts]);
+  }, [favorites, watchlist]);
 
   const checkStreamsInBackground = async (channelList: Channel[]) => {
     const batchSize = 10;
@@ -96,12 +92,9 @@ export function useChannels() {
       await Promise.all(batch.map(async (channel) => {
         const result = await checkStream(channel.url);
         
-        // HTTP streams that need proxy are still considered working
-        const isWorking = result.isWorking || result.needsProxy;
-        
         setChannels(prev => prev.map(c => 
           c.id === channel.id 
-            ? { ...c, isWorking, isChecking: false }
+            ? { ...c, isWorking: result.isWorking, isChecking: false }
             : c
         ));
         
@@ -113,22 +106,6 @@ export function useChannels() {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   };
-
-  // Track playback failures
-  const recordPlaybackFailure = useCallback((channelId: string) => {
-    setFailCounts(prev => ({
-      ...prev,
-      [channelId]: (prev[channelId] || 0) + 1,
-    }));
-  }, [setFailCounts]);
-
-  const resetFailCount = useCallback((channelId: string) => {
-    setFailCounts(prev => {
-      const next = { ...prev };
-      delete next[channelId];
-      return next;
-    });
-  }, [setFailCounts]);
 
   useEffect(() => {
     fetchPlaylist();
@@ -176,9 +153,8 @@ export function useChannels() {
   // Filtered channels
   const filteredChannels = useMemo(() => {
     return channels.filter(channel => {
-      // Hidden filter - channels with 3+ failures are hidden unless showHidden
-      const failCount = failCounts[channel.id] || 0;
-      if (!showHidden && (failCount >= 3 || !channel.isWorking)) return false;
+      // Hidden filter
+      if (!showHidden && !channel.isWorking) return false;
       
       // Search filter
       if (searchQuery) {
@@ -205,7 +181,7 @@ export function useChannels() {
       
       return true;
     });
-  }, [channels, showHidden, searchQuery, categoryFilter, languageFilter, hdOnly, filterType, failCounts]);
+  }, [channels, showHidden, searchQuery, categoryFilter, languageFilter, hdOnly, filterType]);
 
   return {
     channels: filteredChannels,
@@ -222,8 +198,6 @@ export function useChannels() {
     clearFavorites,
     clearWatchlist,
     refetch: fetchPlaylist,
-    recordPlaybackFailure,
-    resetFailCount,
     // Filters
     searchQuery,
     setSearchQuery,
