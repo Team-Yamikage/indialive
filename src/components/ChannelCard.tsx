@@ -30,9 +30,9 @@ export function ChannelCard({
     <div
       className={cn(
         "group relative glass-card overflow-hidden transition-all duration-300",
-        isTvMode ? "p-6" : "p-4",
+        isTvMode ? "p-4 sm:p-6" : "p-3 sm:p-4",
         isFocused && "tv-focus scale-105",
-        !isTvMode && "hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20",
+        !isTvMode && "hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98]",
         !channel.isWorking && "opacity-60"
       )}
       tabIndex={0}
@@ -48,41 +48,41 @@ export function ChannelCard({
       )} />
 
       {/* Status indicators */}
-      <div className="absolute top-3 right-3 flex items-center gap-2 z-10">
+      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex items-center gap-1 sm:gap-2 z-10">
         {channel.isHD && (
-          <span className="px-2 py-0.5 text-xs font-bold bg-primary/20 text-primary rounded-md border border-primary/30">
+          <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-bold bg-primary/20 text-primary rounded-md border border-primary/30">
             HD
           </span>
         )}
         {channel.isWorking ? (
-          <span className="flex items-center gap-1 px-2 py-0.5 text-xs bg-green-500/20 text-green-400 rounded-md">
-            <Wifi className="w-3 h-3" />
-            Live
+          <span className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs bg-green-500/20 text-green-400 rounded-md">
+            <Wifi className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+            <span className="hidden sm:inline">Live</span>
           </span>
         ) : (
-          <span className="flex items-center gap-1 px-2 py-0.5 text-xs bg-red-500/20 text-red-400 rounded-md">
-            <WifiOff className="w-3 h-3" />
-            Offline
+          <span className="flex items-center gap-1 px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs bg-red-500/20 text-red-400 rounded-md">
+            <WifiOff className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+            <span className="hidden sm:inline">Offline</span>
           </span>
         )}
       </div>
 
       {/* Logo/Thumbnail */}
       <div className={cn(
-        "relative mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-secondary/50",
-        isTvMode ? "h-32" : "h-24"
+        "relative mb-2 sm:mb-4 flex items-center justify-center overflow-hidden rounded-lg bg-secondary/50",
+        isTvMode ? "h-24 sm:h-32" : "h-16 sm:h-24"
       )}>
         {channel.logo && !imageError ? (
           <img
             src={channel.logo}
             alt={channel.name}
-            className="w-full h-full object-contain p-3"
+            className="w-full h-full object-contain p-2 sm:p-3"
             onError={() => setImageError(true)}
             loading="lazy"
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-secondary to-muted">
-            <span className="text-3xl font-display font-bold text-muted-foreground/50">
+            <span className="text-2xl sm:text-3xl font-display font-bold text-muted-foreground/50">
               {channel.name.charAt(0).toUpperCase()}
             </span>
           </div>
@@ -94,8 +94,8 @@ export function ChannelCard({
           !isTvMode && "group-hover:opacity-100",
           isFocused && "opacity-100"
         )}>
-          <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/50">
-            <Play className="w-6 h-6 text-primary-foreground ml-1" fill="currentColor" />
+          <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/50">
+            <Play className="w-4 h-4 sm:w-6 sm:h-6 text-primary-foreground ml-0.5" fill="currentColor" />
           </div>
         </div>
       </div>
@@ -103,42 +103,42 @@ export function ChannelCard({
       {/* Channel info */}
       <div className="relative z-10">
         <h3 className={cn(
-          "font-display font-semibold text-foreground truncate mb-2",
-          isTvMode ? "text-xl" : "text-base"
+          "font-display font-semibold text-foreground truncate mb-1 sm:mb-2",
+          isTvMode ? "text-base sm:text-xl" : "text-sm sm:text-base"
         )}>
           {channel.name}
         </h3>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-3">
+        <div className="flex flex-wrap gap-1 sm:gap-1.5 mb-2 sm:mb-3">
           {channel.group && (
-            <span className="px-2 py-0.5 text-xs bg-secondary text-muted-foreground rounded-md">
+            <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs bg-secondary text-muted-foreground rounded-md truncate max-w-[80px] sm:max-w-none">
               {channel.group}
             </span>
           )}
           {channel.language && (
-            <span className="px-2 py-0.5 text-xs bg-accent/20 text-accent rounded-md">
+            <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs bg-accent/20 text-accent rounded-md">
               {channel.language}
             </span>
           )}
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onToggleFavorite(channel.id);
             }}
             className={cn(
-              "p-2 rounded-lg transition-all duration-200",
+              "p-1.5 sm:p-2 rounded-lg transition-all duration-200 touch-manipulation",
               channel.isFavorite
                 ? "bg-yellow-500/20 text-yellow-500"
                 : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
             )}
             aria-label={channel.isFavorite ? "Remove from favorites" : "Add to favorites"}
           >
-            <Star className="w-4 h-4" fill={channel.isFavorite ? "currentColor" : "none"} />
+            <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill={channel.isFavorite ? "currentColor" : "none"} />
           </button>
           
           <button
@@ -147,14 +147,14 @@ export function ChannelCard({
               onToggleWatchlist(channel.id);
             }}
             className={cn(
-              "p-2 rounded-lg transition-all duration-200",
+              "p-1.5 sm:p-2 rounded-lg transition-all duration-200 touch-manipulation",
               channel.isInWatchlist
                 ? "bg-primary/20 text-primary"
                 : "bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
             )}
             aria-label={channel.isInWatchlist ? "Remove from watchlist" : "Add to watchlist"}
           >
-            <Clock className="w-4 h-4" fill={channel.isInWatchlist ? "currentColor" : "none"} />
+            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill={channel.isInWatchlist ? "currentColor" : "none"} />
           </button>
         </div>
       </div>

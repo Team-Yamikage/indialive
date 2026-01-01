@@ -141,6 +141,10 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
 }
 
 @keyframes shimmer {
