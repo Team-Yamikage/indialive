@@ -51,10 +51,10 @@ export function ChannelGrid({
   if (isLoading) {
     return (
       <div className={cn(
-        "grid gap-4 p-4",
+        "grid p-3 sm:p-4",
         isTvMode
-          ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-          : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+          ? "grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"
+          : "grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4"
       )}>
         {Array.from({ length: 12 }).map((_, i) => (
           <ChannelSkeleton key={i} isTvMode={isTvMode} />
@@ -81,10 +81,10 @@ export function ChannelGrid({
 
   return (
     <div className={cn(
-      "grid gap-4 p-4",
+      "grid p-3 sm:p-4",
       isTvMode
-        ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-        : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
+        ? "grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6"
+        : "grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4"
     )}>
       {channels.map((channel, index) => (
         <ChannelCard
