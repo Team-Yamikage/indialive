@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Hero } from '@/components/Hero';
 import { FilterBar } from '@/components/FilterBar';
 import { ChannelGrid } from '@/components/ChannelGrid';
+import { VideoPlayer } from '@/components/VideoPlayer';
 import { TvModeHint } from '@/components/TvModeHint';
 import { Footer } from '@/components/Footer';
 import { useChannels } from '@/hooks/useChannels';
@@ -10,8 +10,6 @@ import { Channel, ViewMode } from '@/types/channel';
 import { Helmet } from 'react-helmet';
 
 const Index = () => {
-  const navigate = useNavigate();
-  
   const {
     channels,
     allChannels,
@@ -38,6 +36,7 @@ const Index = () => {
   } = useChannels();
 
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   
   const channelSectionRef = useRef<HTMLDivElement>(null);
@@ -53,8 +52,8 @@ const Index = () => {
   }, [scrollToChannels]);
 
   const handlePlay = useCallback((channel: Channel) => {
-    navigate(`/play/${channel.id}`);
-  }, [navigate]);
+    setSelectedChannel(channel);
+  }, []);
 
   // TV Mode keyboard navigation
   useEffect(() => {
@@ -84,7 +83,7 @@ const Index = () => {
         case 'Enter':
           e.preventDefault();
           if (focusedIndex >= 0 && focusedIndex < channels.length) {
-            navigate(`/play/${channels[focusedIndex].id}`);
+            handlePlay(channels[focusedIndex]);
           }
           break;
         case 'Escape':
@@ -159,8 +158,14 @@ const Index = () => {
         {/* Footer */}
         <Footer />
 
+        {/* Video Player Modal */}
+        <VideoPlayer
+          channel={selectedChannel}
+          onClose={() => setSelectedChannel(null)}
+        />
+
         {/* TV Mode Navigation Hint */}
-        <TvModeHint isVisible={viewMode === 'tv'} />
+        <TvModeHint isVisible={viewMode === 'tv' && !selectedChannel} />
       </div>
     </>
   );
