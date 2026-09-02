@@ -1,4 +1,4 @@
-import { ArrowRight, Globe2, MonitorPlay, Star, Tv, Zap } from 'lucide-react';
+import { ArrowRight, Globe2, Headphones, MonitorPlay, Play, Star, Tv } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FilterType, ViewMode } from '@/types/channel';
 
@@ -10,151 +10,68 @@ interface HeroProps {
   setViewMode: (mode: ViewMode) => void;
 }
 
-export function Hero({ onBrowse, onTvMode, onFilterChange, viewMode, setViewMode }: HeroProps) {
+export function Hero({ onBrowse, onTvMode, onFilterChange, setViewMode }: HeroProps) {
   const stats = [
+    { value: '1,200+', label: 'channels' },
     { value: '20+', label: 'languages' },
-    { value: '4.9/5', label: 'viewer rating' },
-    { value: '1.2K', label: 'live channels' },
-  ];
-
-  const quickPicks = [
-    { name: 'Colors', accent: 'from-pink-500/50 to-orange-500/20' },
-    { name: 'Sun TV', accent: 'from-cyan-500/50 to-blue-500/20' },
-    { name: 'Zee', accent: 'from-yellow-500/50 to-orange-500/20' },
+    { value: '24/7', label: 'live coverage' },
   ];
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/10">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(34,211,238,0.18),transparent_24%),radial-gradient(circle_at_80%_0%,rgba(168,85,247,0.18),transparent_26%),linear-gradient(135deg,#020817_0%,#0b1120_44%,#111827_100%)]" />
+    <section className="relative isolate overflow-hidden border-b border-border">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_12%,rgba(239,131,84,0.22),transparent_27%),radial-gradient(circle_at_88%_8%,rgba(39,104,98,0.16),transparent_26%),linear-gradient(120deg,#fffaf5_0%,#f5eee7_55%,#edf2ef_100%)]" />
       <div className="hero-grid absolute inset-0 opacity-60" />
-      <div className="absolute -left-20 top-24 h-64 w-64 rounded-full bg-cyan-500/15 blur-3xl" />
-      <div className="absolute right-10 top-14 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl" />
-
-      <div className="relative z-10 container mx-auto px-4 pb-12 pt-6 sm:pt-8 lg:pt-10">
-        <header className="mb-10 flex items-center justify-between gap-4 rounded-full border border-white/10 bg-slate-950/40 px-4 py-3 shadow-[0_0_30px_rgba(14,165,233,0.08)] backdrop-blur-xl">
-          <div className="flex items-center gap-2.5">
-            <img src="/indialive-logo.svg" alt="Indialive logo" className="h-9 w-9 rounded-full border border-white/10 bg-slate-950/60 object-cover" />
+      <div className="relative z-10 container mx-auto px-4 pb-16 pt-5 sm:pt-8 lg:pb-24">
+        <header className="mb-16 flex items-center justify-between gap-4">
+          <a href="/" className="flex items-center gap-3" aria-label="Indialive home">
+            <img src="/indialive-logo.svg" alt="" className="h-11 w-11 rounded-xl shadow-lg" />
             <div>
-              <div className="text-sm font-semibold tracking-[0.24em] text-slate-200 uppercase">Indialive</div>
+              <div className="font-display text-lg font-bold tracking-tight text-slate-900">indialive</div>
+              <div className="font-mono text-[9px] uppercase tracking-[0.24em] text-slate-500">your world, live</div>
             </div>
-          </div>
-
-          <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
-            <a href="#channels" className="transition hover:text-white">Channels</a>
-            <a href="#explore" className="transition hover:text-white">Popular</a>
-            <a href="#features" className="transition hover:text-white">Features</a>
+          </a>
+          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
+            <a href="#channels" className="transition hover:text-primary">Browse channels</a>
+            <a href="#explore" className="transition hover:text-primary">Popular today</a>
+            <a href="#features" className="transition hover:text-primary">Why Indialive</a>
           </nav>
-
-          <Button variant="glass" size="sm" className="hidden sm:inline-flex">
-            Start watching
-          </Button>
+          <Button variant="hero" size="sm" onClick={onBrowse}>Start watching <ArrowRight className="h-4 w-4" /></Button>
         </header>
 
-        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="max-w-2xl">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1.5 text-xs font-medium text-cyan-200">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.9)]" />
-              Live • Indian TV, always on
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-white/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-primary">
+              <span className="h-2 w-2 rounded-full bg-emerald-500" /> On air across India
             </div>
-
-            <h1 className="mb-5 text-4xl font-black leading-[0.95] tracking-[-0.06em] text-white sm:text-5xl lg:text-7xl">
-              Stream every
-              <span className="text-gradient block">Indian story</span>
-              in real time.
+            <h1 className="mb-6 text-5xl font-bold leading-[0.95] tracking-[-0.065em] text-slate-900 sm:text-6xl lg:text-8xl">
+              Stories that<br /><span className="text-gradient">feel like home.</span>
             </h1>
-
-            <p className="max-w-xl text-base text-slate-300 sm:text-lg">
-              Explore Hindi, Tamil, Telugu, Malayalam and regional channels with a premium streaming experience built for quick discovery and zero-friction viewing.
+            <p className="max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
+              Live news, cinema, sport and culture from every corner of India. Find your next channel, press play, and stay close to what matters.
             </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button
-                variant="hero"
-                size="lg"
-                onClick={onBrowse}
-                className="group w-full sm:w-auto"
-              >
-                <Tv className="h-4 w-4 group-hover:animate-pulse" />
-                Browse channels
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button variant="hero" size="lg" onClick={onBrowse} className="group">
+                <Tv className="h-4 w-4" /> Explore live TV <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
               </Button>
-
-              <Button
-                variant="neon"
-                size="lg"
-                onClick={() => {
-                  setViewMode('tv');
-                  onTvMode();
-                }}
-                className="w-full sm:w-auto"
-              >
-                <MonitorPlay className="h-4 w-4" />
-                TV mode
+              <Button variant="outline" size="lg" onClick={() => { setViewMode('tv'); onTvMode(); }}>
+                <MonitorPlay className="h-4 w-4" /> Open TV mode
               </Button>
             </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button variant="glass" size="sm" onClick={() => onFilterChange('favorites')} className="text-xs sm:text-sm">
-                <Star className="h-3.5 w-3.5 text-yellow-400" />
-                Favorites
-              </Button>
-              <Button variant="glass" size="sm" onClick={() => onFilterChange('watchlist')} className="text-xs sm:text-sm">
-                <Zap className="h-3.5 w-3.5 text-cyan-400" />
-                Watchlist
-              </Button>
-              <Button variant="glass" size="sm" onClick={() => onFilterChange('all')} className="text-xs sm:text-sm">
-                <Globe2 className="h-3.5 w-3.5 text-violet-400" />
-                All languages
-              </Button>
-            </div>
-
-            <div className="mt-8 grid gap-3 sm:grid-cols-3">
-              {stats.map((stat) => (
-                <div key={stat.label} className="glass-panel px-4 py-3">
-                  <div className="text-2xl font-black tracking-tight text-white">{stat.value}</div>
-                  <div className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">{stat.label}</div>
-                </div>
-              ))}
+            <div className="mt-10 grid max-w-lg grid-cols-3 gap-3">
+              {stats.map((stat) => <div key={stat.label} className="border-l-2 border-primary/40 pl-3"><div className="font-display text-xl font-bold text-slate-900">{stat.value}</div><div className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-slate-500">{stat.label}</div></div>)}
             </div>
           </div>
 
-          <div className="relative">
-            <div className="glass-panel relative overflow-hidden p-4 shadow-[0_30px_80px_rgba(14,165,233,0.2)]">
-              <div className="mb-4 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-300">
-                <span>Now playing</span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-rose-500/30 bg-rose-500/10 px-2 py-1 text-[10px] text-rose-200">
-                  <span className="h-2 w-2 rounded-full bg-rose-500" />
-                  LIVE
-                </span>
+          <div className="relative mx-auto w-full max-w-md">
+            <div className="absolute -inset-5 rounded-[2rem] bg-primary/10 blur-2xl" />
+            <div className="relative rotate-1 rounded-[1.6rem] border border-white bg-slate-900 p-3 shadow-2xl">
+              <div className="flex items-center justify-between px-3 py-3 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-400"><span>Featured signal</span><span className="flex items-center gap-1.5 text-rose-300"><i className="h-1.5 w-1.5 rounded-full bg-rose-400" /> Live</span></div>
+              <div className="relative flex aspect-[1.15] items-center justify-center overflow-hidden rounded-xl bg-[radial-gradient(circle_at_50%_42%,rgba(239,131,84,0.45),transparent_18%),linear-gradient(145deg,#35445a,#172131)]">
+                <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'linear-gradient(120deg, transparent 35%, rgba(255,255,255,.35) 36%, transparent 37%)', backgroundSize: '22px 22px' }} />
+                <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-[#fff9f3] text-primary shadow-[0_0_50px_rgba(239,131,84,.65)]"><Play className="ml-1 h-8 w-8" fill="currentColor" /></div>
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between"><div><p className="font-mono text-[9px] uppercase tracking-[0.2em] text-slate-300">Now playing</p><h2 className="mt-1 font-display text-2xl font-bold text-white">Colors HD</h2></div><span className="rounded-full bg-white/10 px-2 py-1 font-mono text-[9px] text-slate-200">HINDI</span></div>
               </div>
-
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.25),transparent_30%),linear-gradient(135deg,#111827_0%,#0f172a_32%,#111827_100%)] p-5">
-                <div className="mb-6 flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.28em] text-slate-400">Featured</p>
-                    <h2 className="mt-2 text-2xl font-black text-white">Colors</h2>
-                  </div>
-                  <div className="rounded-full border border-cyan-400/30 bg-cyan-500/10 px-2 py-1 text-xs font-medium text-cyan-200">HD</div>
-                </div>
-
-                <div className="relative mb-6 flex h-44 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.25),transparent_48%)]" />
-                  <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-2xl font-black text-slate-950 shadow-[0_0_30px_rgba(34,211,238,0.7)]">
-                    C
-                  </div>
-                </div>
-
-                <div className="grid gap-3 sm:grid-cols-3">
-                  {quickPicks.map((pick) => (
-                    <div
-                      key={pick.name}
-                      className={`rounded-xl border border-white/10 bg-gradient-to-br ${pick.accent} p-3 text-sm font-medium text-slate-100`}
-                    >
-                      {pick.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <div className="grid grid-cols-3 gap-2 p-2 pt-3">{['News', 'Cinema', 'Sport'].map((item, i) => <button key={item} onClick={() => onFilterChange(i === 0 ? 'all' : 'watchlist')} className="rounded-lg bg-white/5 px-2 py-3 text-left text-xs font-medium text-slate-300 transition hover:bg-primary hover:text-white"><span className="mb-2 block text-primary/80">{i === 0 ? <Globe2 className="h-4 w-4" /> : i === 1 ? <Headphones className="h-4 w-4" /> : <Star className="h-4 w-4" />}</span>{item}</button>)}</div>
             </div>
           </div>
         </div>

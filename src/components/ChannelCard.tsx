@@ -29,10 +29,10 @@ export function ChannelCard({
   return (
     <div
       className={cn(
-        'group relative overflow-hidden border border-white/10 bg-slate-950/60 transition-all duration-300 backdrop-blur-xl',
+        'group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300',
         isTvMode ? 'p-4 sm:p-6' : 'p-3 sm:p-4',
         isFocused && 'tv-focus scale-[1.02]',
-        !isTvMode && 'hover:-translate-y-1 hover:border-cyan-400/40 hover:shadow-[0_15px_40px_rgba(14,165,233,0.15)] active:scale-[0.99]',
+        !isTvMode && 'hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_15px_40px_rgba(54,43,32,0.12)] active:scale-[0.99]',
         !channel.isWorking && 'opacity-70'
       )}
       tabIndex={0}
@@ -46,7 +46,7 @@ export function ChannelCard({
           isFocused && 'opacity-100'
         )}
         style={{
-          background: 'linear-gradient(135deg, rgba(34,211,238,0.12), rgba(168,85,247,0.08), transparent)',
+          background: 'linear-gradient(135deg, rgba(239,131,84,0.10), rgba(39,104,98,0.08), transparent)',
         }}
       />
 
@@ -71,7 +71,7 @@ export function ChannelCard({
 
       <div
         className={cn(
-          'relative mb-3 flex items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-slate-900/80',
+          'relative mb-3 flex items-center justify-center overflow-hidden rounded-xl border border-border bg-secondary',
           isTvMode ? 'h-24 sm:h-32' : 'h-16 sm:h-24'
         )}
       >
@@ -84,8 +84,8 @@ export function ChannelCard({
             loading="lazy"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950">
-            <span className="text-2xl font-black text-slate-300 sm:text-3xl">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-secondary to-muted">
+            <span className="text-2xl font-black text-primary sm:text-3xl">
               {channel.name.charAt(0).toUpperCase()}
             </span>
           </div>
@@ -93,12 +93,12 @@ export function ChannelCard({
 
         <div
           className={cn(
-            'absolute inset-0 flex items-center justify-center bg-slate-950/60 opacity-0 transition-opacity duration-300',
+            'absolute inset-0 flex items-center justify-center bg-slate-900/55 opacity-0 transition-opacity duration-300',
             !isTvMode && 'group-hover:opacity-100',
             isFocused && 'opacity-100'
           )}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-violet-500 text-slate-950 shadow-[0_0_30px_rgba(34,211,238,0.6)] sm:h-14 sm:w-14">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_0_24px_rgba(239,131,84,0.45)] sm:h-14 sm:w-14">
             <Play className="ml-0.5 h-4 w-4 sm:h-6 sm:w-6" fill="currentColor" />
           </div>
         </div>
@@ -107,7 +107,7 @@ export function ChannelCard({
       <div className="relative z-10">
         <h3
           className={cn(
-            'mb-2 truncate font-semibold text-white',
+            'mb-2 truncate font-semibold text-slate-900',
             isTvMode ? 'text-base sm:text-xl' : 'text-sm sm:text-base'
           )}
         >
@@ -116,12 +116,12 @@ export function ChannelCard({
 
         <div className="mb-3 flex flex-wrap gap-1.5 sm:gap-2">
           {channel.group && (
-            <span className="max-w-[80px] truncate rounded-md bg-white/5 px-1.5 py-0.5 text-[10px] text-slate-300 sm:max-w-none sm:text-xs">
+            <span             className="max-w-[80px] truncate rounded-md bg-secondary px-1.5 py-0.5 text-[10px] text-slate-600 sm:max-w-none sm:text-xs">
               {channel.group}
             </span>
           )}
           {channel.language && (
-            <span className="rounded-md bg-violet-500/10 px-1.5 py-0.5 text-[10px] text-violet-200 sm:text-xs">
+            <span className="rounded-md bg-accent/10 px-1.5 py-0.5 text-[10px] text-accent sm:text-xs">
               {channel.language}
             </span>
           )}
@@ -137,7 +137,7 @@ export function ChannelCard({
               'rounded-lg p-1.5 transition-all duration-200 touch-manipulation sm:p-2',
               channel.isFavorite
                 ? 'bg-yellow-500/20 text-yellow-400'
-                : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
+                : 'bg-secondary text-slate-500 hover:bg-muted hover:text-slate-900'
             )}
             aria-label={channel.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
           >
@@ -153,7 +153,7 @@ export function ChannelCard({
               'rounded-lg p-1.5 transition-all duration-200 touch-manipulation sm:p-2',
               channel.isInWatchlist
                 ? 'bg-cyan-500/20 text-cyan-300'
-                : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'
+                : 'bg-secondary text-slate-500 hover:bg-muted hover:text-slate-900'
             )}
             aria-label={channel.isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
           >
