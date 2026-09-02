@@ -154,7 +154,9 @@ export function useChannels() {
   const filteredChannels = useMemo(() => {
     return channels.filter(channel => {
       // Hidden filter
-      if (!showHidden && !channel.isWorking) return false;
+      // Keep catalog entries visible even when a browser-side probe cannot
+      // verify a stream. Many IPTV hosts reject cross-origin health checks
+      // while still allowing playback in the video element.
       
       // Search filter
       if (searchQuery) {

@@ -7,7 +7,7 @@
 .site { min-height:100vh; background:#050505; }
 .bg-video,.bg { position:absolute; inset:0; width:100%; height:100%; }
 .bg-video { object-fit:cover; pointer-events:none; z-index:0; }
-.bg { background:#000; z-index:0; }
+.bg { background:rgba(0,0,0,.38); z-index:0; }
 .page { position:relative; z-index:1; display:flex; height:100%; flex-direction:column; padding:clamp(16px,2.4vh,28px) clamp(14px,3vw,32px); }
 .header { display:flex; align-items:center; justify-content:center; gap:clamp(18px,2.8vw,28px); flex-shrink:0; animation:slideDown .7s cubic-bezier(.22,1,.36,1) both; }
 .logo { display:grid; width:clamp(40px,4.4vw,46px); height:clamp(40px,4.4vw,46px); place-items:center; border-radius:50%; background:#fff; box-shadow:var(--nav-shadow); transition:transform .2s; }
@@ -34,10 +34,10 @@
 .eyebrow { color:#ef8354!important; font-size:11px!important; font-weight:600; letter-spacing:.18em; text-transform:uppercase; }
 .channels-section .p-3 { max-width:1180px; margin:0 auto; padding:0!important; }
 .channels-section .grid-cols-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
-.channels-section .group { min-height:300px; padding:20px; border-color:#2b2b2b; background:#141414; }
-.channels-section .group > .relative.mb-3 { height:170px; margin-bottom:18px; background:#202020; }
-.channels-section .group h3 { font-size:18px; color:#fff; }
+.channels-section .group { min-height:228px; padding:14px; border-color:#2b2b2b; background:#141414; }
+.channels-section .group > .relative.mb-3 { height:108px; margin-bottom:12px; background:#202020; }
+.channels-section .group h3 { margin-bottom:8px; font-size:16px; color:#fff; }
 .channels-section .group .text-slate-600 { color:#aaa; }
 @media(min-width:768px){.channels-section .channels-heading + div + .grid-cols-2,.channels-section .grid-cols-2{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(min-width:1100px){.channels-section .grid-cols-2{grid-template-columns:repeat(4,minmax(0,1fr));}}
-@media(max-width:720px){.channels-heading{display:block}.channels-heading>p{margin-top:14px}.channels-section .group{min-height:270px;padding:16px}.channels-section .group > .relative.mb-3{height:145px}}
+@media(max-width:720px){.channels-heading{display:block}.channels-heading>p{margin-top:14px}.channels-section .group{min-height:220px;padding:12px}.channels-section .group > .relative.mb-3{height:110px}}
