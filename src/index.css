@@ -7,4 +7,4 @@
 :root { --font-sans: "Inter", "Segoe UI", system-ui, sans-serif; --font-display: "BubbledotICG-FinePos", "Geist Pixel Circle", monospace; }
 * { box-sizing: border-box; }
 html, body, #root { width: 100%; min-height: 100%; margin: 0; }
-body { height: 100vh; height: 100dvh; overflow: hidden; background: #000; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+body { min-height: 100vh; overflow-x: hidden; background: #000; font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
