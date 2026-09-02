@@ -108,7 +108,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Indialive | Watch Indian Live TV</title>
+        <title>Intelligence Designed To Evolve</title>
         <meta name="description" content="Stream Indian live TV channels for free. Discover Hindi, Tamil, Telugu, Malayalam, and regional broadcasts in a premium streaming experience." />
         <meta name="keywords" content="Indian TV, IPTV, live streaming, Hindi channels, Tamil TV, Telugu TV, free TV, live TV India" />
         <link rel="canonical" href="/" />

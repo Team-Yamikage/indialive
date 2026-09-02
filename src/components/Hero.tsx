@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FilterType, ViewMode } from '@/types/channel';
@@ -73,7 +73,7 @@ export function Hero({ onBrowse, onTvMode, setViewMode }: HeroProps) {
           <Button variant="default" className="hero-cta anim" onClick={onBrowse}>Get Started <ArrowRight className="h-4 w-4" /></Button>
         </main>
 
-        <footer className="hero-stats">{stats.map((stat, index) => <div className="hero-stat anim" style={{ '--d': `${0.5 + index * 0.08}s` } as React.CSSProperties} key={stat.label}><span className="hero-stat-icon">{stat.icon}</span><div><strong>{counts[index].toFixed(stat.decimals)}<small>{stat.suffix}</small></strong><span>{stat.label}</span></div></div>)}</footer>
+        <footer className="hero-stats">{stats.map((stat, index) => <div className="hero-stat anim" style={{ '--d': `${0.5 + index * 0.08}s` } as CSSProperties} key={stat.label}><span className="hero-stat-icon">{stat.icon}</span><div><strong>{counts[index].toFixed(stat.decimals)}<small>{stat.suffix}</small></strong><span>{stat.label}</span></div></div>)}</footer>
       </div>
     </section>
   );
