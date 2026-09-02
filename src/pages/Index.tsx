@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Clapperboard, Menu, Play, Radio, X } from 'lucide-react';
 import { ChannelGrid } from '@/components/ChannelGrid';
 import { FilterBar } from '@/components/FilterBar';
-import { VideoPlayer } from '@/components/VideoPlayer';
 import { useChannels } from '@/hooks/useChannels';
 import { Channel, ViewMode } from '@/types/channel';
 
@@ -16,6 +16,7 @@ const stats = [
 const links = ['Home', 'Live Channels', 'Categories', 'Watch Guide'];
 
 export default function Index() {
+  const navigate = useNavigate();
   const {
     channels, allChannels, isLoading, error, checkProgress, showHidden, setShowHidden,
     toggleFavorite, toggleWatchlist, refetch, searchQuery, setSearchQuery,
@@ -24,7 +25,6 @@ export default function Index() {
   } = useChannels();
   const [menuOpen, setMenuOpen] = useState(false);
   const [counts, setCounts] = useState(stats.map(() => 0));
-  const [selectedChannel, setSelectedChannel] = useState<Channel | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const statsRef = useRef<HTMLElement>(null);
   const channelsRef = useRef<HTMLElement>(null);
@@ -61,6 +61,10 @@ export default function Index() {
 
   const browseChannels = () => channelsRef.current?.scrollIntoView({ behavior: 'smooth' });
 
+  const handlePlay = (channel: Channel) => {
+    navigate(`/watch/${channel.id}`);
+  };
+
   return (
     <>
       <Helmet><title>IndiaLive | Watch Indian Live TV</title><meta name="description" content="Watch Indian live TV channels online for free. Discover news, sports, entertainment and regional channels in one place." /></Helmet>
@@ -94,9 +98,8 @@ export default function Index() {
         <section className="channels-section" id="channels" ref={channelsRef}>
           <div className="channels-heading"><div><p className="eyebrow">Live now</p><h2>Choose a channel and start watching</h2></div><p>Fresh streams, familiar faces, and regional favorites in one easy-to-browse lineup.</p></div>
           <FilterBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} categoryFilter={categoryFilter} setCategoryFilter={setCategoryFilter} languageFilter={languageFilter} setLanguageFilter={setLanguageFilter} hdOnly={hdOnly} setHdOnly={setHdOnly} filterType={filterType} setFilterType={setFilterType} viewMode={viewMode} setViewMode={setViewMode} showHidden={showHidden} setShowHidden={setShowHidden} categories={categories} languages={languages} totalChannels={allChannels.length} visibleChannels={channels.length} checkProgress={checkProgress} />
-          <ChannelGrid channels={channels} isLoading={isLoading} error={error} viewMode={viewMode} onPlay={setSelectedChannel} onToggleFavorite={toggleFavorite} onToggleWatchlist={toggleWatchlist} onRetry={refetch} />
+          <ChannelGrid channels={channels} isLoading={isLoading} error={error} viewMode={viewMode} onPlay={handlePlay} onToggleFavorite={toggleFavorite} onToggleWatchlist={toggleWatchlist} onRetry={refetch} />
         </section>
-        <VideoPlayer channel={selectedChannel} onClose={() => setSelectedChannel(null)} />
       </div>
     </>
   );

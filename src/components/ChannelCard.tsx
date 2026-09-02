@@ -31,8 +31,8 @@ export function ChannelCard({
       className={cn(
         'group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300',
         isTvMode ? 'p-4 sm:p-6' : 'p-3 sm:p-4',
-        isFocused && 'tv-focus scale-[1.02]',
-        !isTvMode && 'hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_15px_40px_rgba(54,43,32,0.12)] active:scale-[0.99]',
+        isFocused && 'tv-focus scale-[1.02] z-50',
+        !isTvMode && 'hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_15px_40px_rgba(54,43,32,0.12)] active:scale-[0.99] hover:z-50',
         !channel.isWorking && 'opacity-70'
       )}
       tabIndex={0}
@@ -50,7 +50,7 @@ export function ChannelCard({
         }}
       />
 
-      <div className="absolute right-2 top-2 z-10 flex items-center gap-1.5 sm:right-3 sm:top-3">
+      <div className="absolute right-2 top-2 z-20 flex items-center gap-1.5 sm:right-3 sm:top-3">
         {channel.isHD && (
           <span className="rounded-md border border-cyan-400/30 bg-cyan-500/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-200">
             HD

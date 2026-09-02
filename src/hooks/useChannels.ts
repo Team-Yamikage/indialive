@@ -152,7 +152,7 @@ export function useChannels() {
 
   // Filtered channels
   const filteredChannels = useMemo(() => {
-    return channels.filter(channel => {
+    const filtered = channels.filter(channel => {
       // Hidden filter
       // Keep catalog entries visible even when a browser-side probe cannot
       // verify a stream. Many IPTV hosts reject cross-origin health checks
@@ -182,6 +182,17 @@ export function useChannels() {
       if (filterType === 'watchlist' && !channel.isInWatchlist) return false;
       
       return true;
+    });
+    
+    // Sort: Hindi channels first, then by name
+    return filtered.sort((a, b) => {
+      const aIsHindi = a.language?.toLowerCase() === 'hindi';
+      const bIsHindi = b.language?.toLowerCase() === 'hindi';
+      
+      if (aIsHindi && !bIsHindi) return -1;
+      if (!aIsHindi && bIsHindi) return 1;
+      
+      return a.name.localeCompare(b.name);
     });
   }, [channels, showHidden, searchQuery, categoryFilter, languageFilter, hdOnly, filterType]);
 
