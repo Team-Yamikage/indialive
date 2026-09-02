@@ -50,6 +50,28 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## 21st.dev CLI setup
+
+Install the CLI locally:
+
+```sh
+npm i -g @21st-dev/cli
+21st login
+```
+
+For CI or headless environments, avoid the browser login and pass the key through the project wrapper instead:
+
+```sh
+export API_KEY_21ST="<your-21st-key>"
+./ci/scripts/21st.sh search "button" --limit 3
+```
+
+The wrapper accepts `--api-key` too, so scripts can do:
+
+```sh
+./ci/scripts/21st.sh --api-key "$API_KEY_21ST" search "button" --limit 3
+```
+
 ## What technologies are used for this project?
 
 This project is built with:
